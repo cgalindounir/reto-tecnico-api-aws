@@ -1,0 +1,51 @@
+service: galindo-prueba
+frameworkVersion: '2||3'
+
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  iamRoleStatements:
+    - Effect: Allow
+      Action: dynamodb:*
+      Resource: arn:aws:dynamodb:us-east-1:450552646276:table/gente
+
+functions:
+  hello:
+      handler: handler.hello
+      events:
+        - httpApi:
+            path: /
+            method: get
+  getPersonaje:
+      handler: src/getPersonaje.getPersonaje
+      events:
+        - httpApi:
+            path: /verPersonajeSwapi/{id}
+            method: get
+  listarPersonajesBD:
+      handler: src/listarPersonajesBD.listarPersonajesBD
+      events:
+        - httpApi:
+            path: /listarPersonajesBD
+            method: get
+  addPersonaje:
+      handler: src/addPersonaje.addPersonaje
+      events:
+        - httpApi:
+            path: /agregarPersonaje
+            method: post
+  modificarPersonaje:
+      handler: src/modificarPersonaje.modificarPersonaje
+      events:
+        - httpApi:
+            path: /modificarPersonaje
+            method: post
+  borrarPersonaje:
+      handler: src/borrarPersonaje.borrarPersonaje
+      events:
+        - httpApi:
+            path: /borrarPersonaje
+            method: post
+
+
